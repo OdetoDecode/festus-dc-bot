@@ -169,11 +169,7 @@ class Bot(BotBase):
 
 					for name, value, inline in fields:
 						embed.add_field(name=name, value=value, inline=inline)
-					
-					mod = self.get_cog("Mod")
-					await mod.log_channel.send(embed=embed)
-					await message.channel.send("Message relayed to moderators.")
-
+									
 			else:
 				await self.process_commands(message)
 

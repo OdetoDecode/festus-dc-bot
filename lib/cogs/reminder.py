@@ -33,7 +33,7 @@ class Reminder(commands.Cog):
             
             await ctx.send(f"✅ Reminder set for **{date} at {time} IST!**")
         except ValueError:
-            await ctx.send("❌ Invalid format! Use `!remindme DD-MM-YYYY HH:MM Your message`")
+            await ctx.send("❌ Invalid format! Use `+remindme DD-MM-YYYY HH:MM Your message`")
 
     @tasks.loop(minutes=1)
     async def check_reminders(self):
