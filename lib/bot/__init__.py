@@ -48,9 +48,9 @@ class Bot(BotBase):
 		db.autosave(self.scheduler)
 		super().__init__(command_prefix=get_prefix, owner_ids=OWNER_IDS, intents=Intents.all())
 
-	def setup(self):
+	async def setup(self):
 		for cog in COGS:
-			self.load_extension(f"lib.cogs.{cog}")
+			await self.load_extension(f"lib.cogs.{cog}")
 			print(f" {cog} cog loaded")
 		print("setup complete")
 
@@ -73,16 +73,23 @@ class Bot(BotBase):
 
 	def run(self, version):
 		self.VERSION = version
-
 		print("running setup...")
-		self.setup()
 
 		with open("./lib/bot/token.0", "r", encoding="utf-8") as tf:
-			self.TOKEN = tf.read()
-		print("running bot...")
-		
-		super().run(self.TOKEN, reconnect=True)
+			self.TOKEN = tf.read().strip()  
+		import asyncio
 
+		try:
+			asyncio.run(self.start_bot())  
+		except KeyboardInterrupt:
+			print("Bot shutting down...")
+
+	async def start_bot(self):
+		await self.setup() 
+		async with self:
+			await self.start(self.TOKEN)
+
+		
 	async def process_commands(self, message):
 		ctx = await self.get_context(message, cls=Context)
 
@@ -123,7 +130,7 @@ class Bot(BotBase):
 			if isinstance(exc.original, Forbidden):
 				await ctx.send("I do not have permission to do that.")
 			else:
-				raise exc.original
+				raise exc
 		else:
 			raise exc
 
@@ -140,9 +147,6 @@ class Bot(BotBase):
 			await self.stdout.send("Now online!")
 			self.ready = True
 			print("bot ready")
-
-			meta = self.get_cog("Meta")
-			await meta.set()
 
 		else:
 			print("bot reconnected")
