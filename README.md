@@ -17,6 +17,10 @@ A simple Discord Bot.
   - Rolls N dice, each of X sides, and returns sum
 + `+slap @user <reason>`
   - Declares that you slapped the user
+### Instructions
++ Change guild id in lib/bot/__init__.py to your server id
++ Change channel ids in bot/__init.py and all cog code files
++ Add token.0 textfile to lib/bot with your own token id in it
 
 ### References
 Carberra Tutorials
