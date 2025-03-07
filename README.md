@@ -13,6 +13,8 @@ A simple Discord Bot.
   - Deletes your command and repeats the message
 + `+createpoll <time in min> <question> <option1> <option2> ...`
   - Creates user poll with upto 10 options
++ `+remindme DD-MM-YYYY hh:mm <message>`
+  - Sends DM at the set time
 + `+dice <N>d<X>`
   - Rolls N dice, each of X sides, and returns sum
 + `+slap @user <reason>`
